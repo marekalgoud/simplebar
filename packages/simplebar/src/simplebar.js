@@ -166,11 +166,12 @@ export default class SimpleBar {
 
   initDOM() {
     // make sure this element doesn't have the elements yet
-    if (
-      Array.prototype.filter.call(this.el.children, child =>
-        child.classList.contains(this.classNames.wrapper)
-      ).length
-    ) {
+    const data = this.el.children
+      ? this.el.children.filter(child =>
+          child.classList.contains(this.classNames.wrapper)
+        )
+      : [];
+    if (data.length) {
       // assume that element has his DOM already initiated
       this.wrapperEl = this.el.querySelector(`.${this.classNames.wrapper}`);
       this.contentWrapperEl =
@@ -927,8 +928,9 @@ export default class SimpleBar {
       el.webkitMatchesSelector ||
       el.mozMatchesSelector ||
       el.msMatchesSelector;
-    return Array.prototype.filter.call(el.children, child =>
-      matches.call(child, query)
-    )[0];
+    const data = el.children
+      ? el.children.filter(child => matches.call(child, query))[0]
+      : null;
+    return data;
   }
 }
